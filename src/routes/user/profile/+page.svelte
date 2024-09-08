@@ -3,6 +3,8 @@
     import { onMount } from 'svelte';
     let uploadPpf
     let id = $currentUser.id
+    let username = $currentUser.username
+    let currentPassword
     let password1
     let password2
     let message = 'change password'
@@ -29,7 +31,7 @@
     })
 
 
-    async function login(){
+    async function login(username, password){
         await pb.collection('users').authWithPassword(username,password)
     }
 
@@ -38,9 +40,17 @@
         
     
 
-        const update = await pb.collection('users').requestPasswordReset($currentUser.email);
-        console.log(update)
+        const data = {
+            "password": password1,
+            "passwordConfirm": password2,
+            'oldPassword': currentPassword
+        }
 
+        const record = await pb.collection('users').update($currentUser.id, data);
+
+        login(username, password1)
+
+        console.log(record)
 
 
     }
@@ -88,6 +98,11 @@
 
 {#if passOn}
     <form>
+        <input
+        type="password"
+        placeholder="current password"
+        bind:value={currentPassword}
+    >
         <input
             type="password"
             placeholder="password"
