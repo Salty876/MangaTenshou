@@ -77,9 +77,9 @@
 <p>Username: {$currentUser.username}</p>
 <p>Email: {$currentUser.email}</p>
 <p>Date Joined: {dateJoined}</p>
-<!-- {#if $currentUser.avatar}
+{#if $currentUser.avatar}
     <img src="http://127.0.0.1:8090/api/files/users/{$currentUser.id}/{$currentUser.avatar}?thumb=100x100" alt="User Avatar">
-{/if} -->
+{/if}
 
 
 <form>
